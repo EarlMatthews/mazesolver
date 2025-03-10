@@ -1,4 +1,5 @@
 from tkinter import Tk, Canvas
+import random
 
 class Point:
     def __init__(self, x, y):
@@ -40,17 +41,22 @@ class Window:
     def draw_line(self, line, fill_color):
         line.draw(self.canvas,fill_color)
 
+def generate_random_lines(num_lines):
+    lines = []
+    for i in range(num_lines):
+        start = Point(random.randint(0, 800), random.randint(0, 600))
+        end = Point(random.randint(0, 800), random.randint(0, 600))
+        lines.append(Line(start, end))
+    return lines    
+
 
 def main():
     win = Window("My Application",800,600)
-    win.wait_for_close()
-
      # Create points and a line
-    start = Point(100, 100)
-    end = Point(300, 300)
-    line = Line(start, end)
+    for line in generate_random_lines(1000):
+        win.draw_line(line,'red')
 
-    win.draw_line(line,'red')
-
+    win.wait_for_close()
+    
 if __name__ == "__main__":
     main()
