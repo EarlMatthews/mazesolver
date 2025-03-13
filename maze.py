@@ -45,9 +45,26 @@ class Maze:
         for i in range(self.num_rows):
             for j in range(self.num_cols):
                 self._draw_cell(i, j)
-                self.win.redraw()
-                self.win.canvas.after(50)
-                self.win.canvas.update()
+                self._win.redraw()
+                self._win.canvas.after(50)
+                self._win.canvas.update()
 
 
-    
+    def _break_entrance_and_exit(self):
+        """
+        Creates an entrance at the top-left cell (0,0) and an exit at the bottom-right cell
+        by removing outer walls from these cells. For the entrance, the top wall is removed,
+        and for the exit, the bottom wall is removed.
+        """
+        # Break the top wall of the entrance (top-left cell)
+        entrance_cell = self._cells[0][0]
+        entrance_cell.has_top_wall = False
+        
+        # Break the bottom wall of the exit (bottom-right cell)
+        exit_cell = self._cells[self._num_cols - 1][self._num_rows - 1]
+        exit_cell.has_bottom_wall = False
+        
+        # Redraw the cells to show the changes
+        if self._win is not None:
+            self._draw_cell(0, 0)  # Redraw entrance
+            self._draw_cell(self._num_cols - 1, self._num_rows - 1)  # Redraw exit
